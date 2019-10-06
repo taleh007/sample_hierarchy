@@ -5,22 +5,27 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+### Ruby version
+
 2.6.*
 
-* System dependencies
+### System dependencies
+
 Sqlite3
 
-* Setup
+### Setup
+
 ```bash
 bundle install
+
+yarn install --check-files
 
 bundle exec rake db:create db:migrate db:seed
 
 bundle exec rails s
 ```
 
-* Tests
+### Tests
 
 ```bash
 
