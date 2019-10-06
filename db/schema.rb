@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_05_212640) do
+ActiveRecord::Schema.define(version: 2019_10_06_035900) do
 
   create_table "site_point_hierarchies", force: :cascade do |t|
     t.integer "ancestor_id", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2019_10_05_212640) do
   end
 
   create_table "site_points", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "path"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

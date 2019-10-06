@@ -1,13 +1,16 @@
 class SitePoint < ApplicationRecord
   has_closure_tree order: 'path DESC', dependent: :delete_all, name_column: :path
 
+  validates :name, presence: true
+  validates :path, presence: true, if: :parent_id
+
   class << self
     def hash_tree_as_json(options = {})
       recursive_extractor = lambda do |node, childrens_map, options = {}|
         options[:absolute_path] ||= []
         options[:absolute_path] += [node.path]
         options[:view_id]       ||= []
-        options[:view_id]       += [node.name]
+        options[:view_id]       += [node.name.gsub(/\s+/, ?_).downcase]
 
         data = {
           name: node.name,
@@ -31,17 +34,3 @@ class SitePoint < ApplicationRecord
     end
   end
 end
-
-
-
-# SitePoint.hash_tree_as_json.each do |k, v|
-#   printer(k, v)
-# end
-
-# def printer(k, v)
-#   puts "\t" * (k.level + 1) + k.name
-
-#   return unless v.is_a? Hash
-
-#   v.each { |kk, vv| printer(kk, vv) }
-# end
