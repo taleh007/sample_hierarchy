@@ -3,6 +3,5 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
-  resource :home, controller: 'home', only: %i[index]
-  resource :site_map, controller: 'site_map', only: %i[index]
+  get :site_map, to: 'site_map#index', defaults: { format: 'json' }
 end

@@ -3,18 +3,24 @@ class SitePoint < ApplicationRecord
 
   class << self
     def hash_tree_as_json(options = {})
-      recursive_extractor = lambda do |node, childrens_map|
+      recursive_extractor = lambda do |node, childrens_map, options = {}|
+        options[:absolute_path] ||= []
+        options[:absolute_path] += [node.path]
+        options[:view_id]       ||= []
+        options[:view_id]       += [node.name]
+
         data = {
-          node: node.attributes
+          name: node.name,
+          absolute_path: options[:absolute_path].join(?/),
+          view_id: options[:view_id].join(?.),
+          leaf: false,
         }
 
-        if childrens_map.is_a? Hash
-          data[:childrens] = childrens_map.each_with_object([]) do |(kk, vv), memo|
-            memo << recursive_extractor.call(kk, vv)
-          end
-        else
-          data[:leaf] = true
+        data[:children] = childrens_map.each_with_object([]) do |(kk, vv), memo|
+          memo << recursive_extractor.call(kk, vv, options.dup)
         end
+
+        data[:leaf] = true if  data[:children].blank?
 
         data
       end
