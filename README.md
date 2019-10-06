@@ -6,19 +6,23 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+2.6.*
 
 * System dependencies
+Sqlite3
 
-* Configuration
+* Setup
+```bash
+bundle install
 
-* Database creation
+bundle exec rake db:create db:migrate db:seed
 
-* Database initialization
+bundle exec rails s
+```
 
-* How to run the test suite
+* Tests
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
 
-* Deployment instructions
-
-* ...
+bundle exec rspec spec
+```
